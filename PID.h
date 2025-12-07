@@ -1,60 +1,38 @@
 #ifndef PID_H
 #define PID_H
 
+#include <Arduino.h>
+#include "Input.h"
 #include "DCEnc.h"
-#include "InputLeft.h"
-#include "InputRight.h"
-#include "config.h"
+#include "Constants.h"
 
-// PID for Left Motor
-class PIDLeft {
-private:
-    InputLeft iL;
-    DCEnc dcEL;
+class PID {
+  private:
+    Input input; // Generic Input object
+    DCEnc dcEnc; // Generic Encoder object
+    
     float Kp;
     float Ki;
     float Kd;
+    
     float error;
     float error_diff;
-    float error_prev;
-    float error_sum;
+    float error_prev = 0;
+    float error_sum = 0;
     int u;
-    float target_rpm;
-    float current_rpm;
+
+    float target_rpm = 0;
+    float current_rpm = 0;
 
     void calc_error();
     void calc_error_sum();
     void calc_error_diff();
     void debug();
 
-public:
-    PIDLeft();
-    void calculate_output();
-};
-
-// PID for Right Motor
-class PIDRight {
-private:
-    InputRight iR;
-    DCEnc dcER;
-    float Kp;
-    float Ki;
-    float Kd;
-    float error;
-    float error_diff;
-    float error_prev;
-    float error_sum;
-    int u;
-    float target_rpm;
-    float current_rpm;
-
-    void calc_error();
-    void calc_error_sum();
-    void calc_error_diff();
-    void debug();
-
-public:
-    PIDRight();
+  public:
+    // Constructor accepts side and specific PID constants
+    PID(int side, float kp, float ki, float kd);
+    
     void calculate_output();
 };
 
