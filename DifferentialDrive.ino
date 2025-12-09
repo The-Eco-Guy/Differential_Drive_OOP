@@ -3,10 +3,12 @@
 
 // --- CONFIGURATION ---
 // Set this to true for Left Motor code, false for Right Motor code
-bool isLeftMotor = true; 
+const bool isLeftMotor = true; 
 // ---------------------
 
-PID* motorPID;
+// STATIC ALLOCATION
+// We use the ternary operator (?) to set the direction based on the config above.
+PID motorPID(isLeftMotor ? -1 : 1, 2.0, 0.0, 0.0);
 
 void setup() {
   Serial.begin(9600); 
@@ -20,17 +22,8 @@ void setup() {
   digitalWrite(IN4_PIN, LOW);
   analogWrite(EN_PIN, 0);
 
-  if (isLeftMotor) {
-    // Left Motor Configuration: 
-
-    motorPID = new PID(-1, 2.0, 0.001, 0.001);
-  } else {
-    // Right Motor Configuration:
-  
-    motorPID = new PID(1, 2.0, 0.0, 0.0);
-  }
 }
 
 void loop() {
-  motorPID->calculate_output();
+  motorPID.calculate_output();
 }
