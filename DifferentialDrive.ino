@@ -22,13 +22,11 @@ void setup() {
 
   if (isLeftMotor) {
     // Left Motor Configuration: 
-    // Side = -1
-    // PID = 2, 0.001, 0.001 (Values from your left file)
+
     motorPID = new PID(-1, 2.0, 0.001, 0.001);
   } else {
     // Right Motor Configuration:
-    // Side = 1
-    // PID = 2, 0, 0 (Values from your right file)
+  
     motorPID = new PID(1, 2.0, 0.0, 0.0);
   }
 }
