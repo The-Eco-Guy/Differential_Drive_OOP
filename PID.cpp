@@ -52,7 +52,10 @@ void PID::calculate_output() {
     u = u * -1;
   }
   
-  if (u > 255) u = 255;
+  
+  u=map(u,0,63,0,255); //63 was found to be the maximum possible value of u in my simulations
+ 
+  u=constrain(u,0,255);
   
   analogWrite(EN_PIN, u);
 
